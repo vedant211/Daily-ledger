@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Daily Ledger — Wall Street, Markets &amp; Money</title>
+<meta name="description" content="A daily front page of financial news: Wall Street headlines, M&amp;A deals, market moves, analyst commentary and macro news, compiled from public newswires.">
+<meta name="color-scheme" content="light">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f7f4ec'/><text y='78' x='50' font-size='80' text-anchor='middle' font-family='Georgia,serif' fill='%2312100e'>L</text></svg>">
+</head>
+<body>
+
+<a class="skip-link" href="#top-stories">Skip to the headlines</a>
+
+<!-- ============ MASTHEAD ============ -->
+<header class="masthead" role="banner">
+  <div class="masthead__inner">
+    <p class="masthead__eyebrow">Compiled hourly from public newswires &amp; exchange data</p>
+
+    <h1 class="masthead__title">The Daily Ledger</h1>
+
+    <p class="masthead__motto">All the numbers that move the money</p>
+
+    <div class="dateline">
+      <span class="dateline__cell" id="dateline-date">&nbsp;</span>
+      <span class="dateline__cell dateline__cell--mid" id="dateline-edition">&nbsp;</span>
+      <span class="dateline__cell" id="dateline-vol">&nbsp;</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TICKER TAPE ============ -->
+<div class="tape" id="tape" aria-label="Market ticker">
+  <div class="tape__track" id="tape-track">
+    <span class="tape__item tape__item--placeholder">Waiting on the tape&hellip;</span>
+  </div>
+</div>
+
+<!-- ============ STATUS BAR ============ -->
+<div class="statusbar">
+  <p class="statusbar__text" id="status" role="status" aria-live="polite">Pulling today&rsquo;s wires&hellip;</p>
+  <button class="statusbar__btn" id="refresh-btn" type="button">Pull latest</button>
+</div>
+
+<main id="main">
+
+  <!-- ============ TOP STORIES ============ -->
+  <section class="section" id="top-stories" aria-labelledby="hd-top">
+    <div class="section__head">
+      <h2 class="section__title" id="hd-top">Top Stories</h2>
+      <p class="section__kicker">The day&rsquo;s leading business and markets coverage</p>
+    </div>
+    <div class="lead-slot" id="top-stories-lead"></div>
+    <div class="section__body" id="top-stories-body">
+      <p class="loading">Setting the front page&hellip;</p>
+    </div>
+  </section>
+
+  <!-- ============ MARKETS ============ -->
+  <section class="section" id="markets" aria-labelledby="hd-markets">
+    <div class="section__head">
+      <h2 class="section__title" id="hd-markets">Markets</h2>
+      <p class="section__kicker">Where the indexes, rates and bellwethers closed out</p>
+    </div>
+
+    <div class="board" id="board">
+      <div class="board__col">
+        <h3 class="board__title">Indexes &amp; Benchmarks</h3>
+        <table class="quotes" id="quotes-index">
+          <tbody><tr><td class="quotes__name">Loading the board&hellip;</td><td class="quotes__last"></td><td class="quotes__chg"></td></tr></tbody>
+        </table>
+      </div>
+      <div class="board__col">
+        <h3 class="board__title">Bellwether Shares</h3>
+        <table class="quotes" id="quotes-single">
+          <tbody><tr><td class="quotes__name">Loading the board&hellip;</td><td class="quotes__last"></td><td class="quotes__chg"></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <p class="board__note" id="board-note">Prices are delayed and shown for reference only. Not investment advice.</p>
+
+    <div class="section__body" id="markets-body">
+      <p class="loading">Reading the market wires&hellip;</p>
+    </div>
+  </section>
+
+  <!-- ============ M&A ============ -->
+  <section class="section" id="deals" aria-labelledby="hd-deals">
+    <div class="section__head">
+      <h2 class="section__title" id="hd-deals">Mergers &amp; Acquisitions</h2>
+      <p class="section__kicker">Deals announced, rumoured, priced and pulled</p>
+    </div>
+    <div class="section__body" id="deals-body">
+      <p class="loading">Checking the deal desk&hellip;</p>
+    </div>
+  </section>
+
+  <!-- ============ ANALYST VIEWS ============ -->
+  <section class="section" id="views" aria-labelledby="hd-views">
+    <div class="section__head">
+      <h2 class="section__title" id="hd-views">Analyst Views</h2>
+      <p class="section__kicker">Calls, notes and commentary from valuation and strategy desks</p>
+    </div>
+    <div class="section__body" id="views-body">
+      <p class="loading">Collecting the notes&hellip;</p>
+    </div>
+  </section>
+
+  <!-- ============ MACRO ============ -->
+  <section class="section" id="macro" aria-labelledby="hd-macro">
+    <div class="section__head">
+      <h2 class="section__title" id="hd-macro">The Economy</h2>
+      <p class="section__kicker">Central banks, rates, inflation, earnings and new issues</p>
+    </div>
+    <div class="section__body" id="macro-body">
+      <p class="loading">Filing from Washington&hellip;</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <div class="colophon__rule"></div>
+  <p class="colophon__line"><strong>The Daily Ledger</strong> assembles headlines from publicly available RSS feeds and delayed exchange data. Every headline links back to the publisher, who owns the reporting.</p>
+  <p class="colophon__line colophon__line--small">Nothing here is investment advice. Prices are delayed. Built as a static page &mdash; no accounts, no tracking, no server.</p>
+  <p class="colophon__folio" id="colophon-folio">&nbsp;</p>
+</footer>
+
+<noscript>
+  <div class="noscript">This page assembles itself in your browser, so it needs JavaScript switched on to fetch the day&rsquo;s news.</div>
+</noscript>
+
+<script src="app.js"></script>
+</body>
+</html>

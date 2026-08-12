@@ -1,0 +1,499 @@
+/* ==========================================================================
+   THE DAILY LEDGER — styles.css
+   A broadsheet front page. Cream stock, black ink, hairline rules.
+   ========================================================================== */
+
+:root{
+  --paper:        #f7f4ec;
+  --paper-deep:   #efeadf;
+  --ink:          #12100e;
+  --ink-soft:     #4c453b;
+  --ink-faint:    #7d7365;
+  --rule:         #c9c1b1;
+  --rule-hair:    #ddd6c7;
+  --up:           #1f5c3d;
+  --down:         #8f2a22;
+
+  --display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --body:    "Source Serif 4", Georgia, "Times New Roman", serif;
+  --util:    "Roboto Condensed", "Helvetica Neue", Arial, sans-serif;
+
+  --gut: clamp(14px, 3.2vw, 28px);   /* page gutter */
+  --max: 1240px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.5;
+  /* faint newsprint tooth */
+  background-image:
+    radial-gradient(circle at 15% 12%, rgba(0,0,0,.014) 0 1px, transparent 1px),
+    radial-gradient(circle at 72% 63%, rgba(0,0,0,.012) 0 1px, transparent 1px);
+  background-size: 13px 13px, 19px 19px;
+}
+
+a{ color:inherit; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--ink); color:var(--paper);
+  padding:10px 16px; font-family:var(--util); z-index:50;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--ink);
+  outline-offset:3px;
+}
+
+/* ============================ MASTHEAD ============================ */
+
+.masthead{
+  padding:clamp(18px,4vw,40px) var(--gut) 0;
+  border-top:6px solid var(--ink);
+}
+.masthead__inner{
+  max-width:var(--max);
+  margin:0 auto;
+  text-align:center;
+}
+
+.masthead__eyebrow{
+  margin:0 0 clamp(10px,2vw,18px);
+  font-family:var(--util);
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+
+.masthead__title{
+  margin:0;
+  font-family:var(--display);
+  font-weight:900;
+  font-size:clamp(42px, 12.2vw, 132px);
+  line-height:.92;
+  letter-spacing:-.022em;
+  text-transform:none;
+}
+
+.masthead__motto{
+  margin:clamp(8px,1.6vw,14px) 0 clamp(12px,2.4vw,20px);
+  font-family:var(--body);
+  font-style:italic;
+  font-size:clamp(13px,2.2vw,17px);
+  color:var(--ink-soft);
+}
+
+/* Dateline bar: thick rule above, hairline below — classic broadsheet */
+.dateline{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  gap:4px 14px;
+  border-top:3px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:7px 0;
+  font-family:var(--util);
+  font-size:11.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.dateline__cell{ flex:1 1 auto; text-align:left; white-space:nowrap; }
+.dateline__cell--mid{ text-align:center; }
+.dateline__cell:last-child{ text-align:right; }
+
+@media (max-width:560px){
+  .dateline{ flex-direction:column; gap:3px; }
+  .dateline__cell,
+  .dateline__cell--mid,
+  .dateline__cell:last-child{ text-align:center; width:100%; }
+}
+
+/* ============================ TICKER TAPE ============================ */
+
+.tape{
+  overflow:hidden;
+  border-bottom:1px solid var(--rule);
+  background:var(--paper-deep);
+  padding:0 0;
+}
+.tape__track{
+  display:flex;
+  gap:0;
+  width:max-content;          /* so translateX(-50%) is half the CONTENT, not the screen */
+  white-space:nowrap;
+  padding:7px 0;
+  will-change:transform;
+  animation:tape-roll 64s linear infinite;
+}
+.tape:hover .tape__track,
+.tape:focus-within .tape__track{ animation-play-state:paused; }
+
+@keyframes tape-roll{
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-50%); }
+}
+
+.tape__item{
+  font-family:var(--util);
+  font-size:12.5px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:0 18px;
+  border-right:1px solid var(--rule-hair);
+  color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.tape__item--placeholder{ color:var(--ink-faint); border-right:0; }
+.tape__sym{ font-weight:700; }
+.tape__px{ margin-left:7px; }
+.tape__chg{ margin-left:7px; }
+.tape__chg--up{ color:var(--up); }
+.tape__chg--down{ color:var(--down); }
+
+@media (prefers-reduced-motion: reduce){
+  .tape{ overflow-x:auto; }
+  .tape__track{ animation:none; }
+}
+
+/* ============================ STATUS BAR ============================ */
+
+.statusbar{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:9px var(--gut);
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--rule);
+}
+.statusbar__text{
+  margin:0;
+  font-family:var(--util);
+  font-size:11.5px;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.statusbar__btn{
+  flex:none;
+  font-family:var(--util);
+  font-size:11.5px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  background:transparent;
+  color:var(--ink);
+  border:1px solid var(--ink);
+  padding:5px 13px;
+  cursor:pointer;
+}
+.statusbar__btn:hover{ background:var(--ink); color:var(--paper); }
+.statusbar__btn[disabled]{ opacity:.4; cursor:default; }
+.statusbar__btn[disabled]:hover{ background:transparent; color:var(--ink); }
+
+/* ============================ SECTIONS ============================ */
+
+main{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 var(--gut) 40px;
+}
+
+.section{
+  padding-top:clamp(26px,4vw,44px);
+}
+.section + .section{
+  border-top:1px solid var(--rule);
+  margin-top:clamp(26px,4vw,44px);
+}
+
+.section__head{
+  text-align:center;
+  margin-bottom:clamp(18px,3vw,30px);
+}
+.section__title{
+  margin:0;
+  font-family:var(--util);
+  font-weight:700;
+  font-size:clamp(15px,2.6vw,19px);
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  justify-content:center;
+}
+.section__title::before,
+.section__title::after{
+  content:"";
+  flex:1 1 0;
+  height:0;
+  border-top:1px solid var(--ink);
+  max-width:220px;
+}
+.section__kicker{
+  margin:8px 0 0;
+  font-style:italic;
+  font-size:14px;
+  color:var(--ink-faint);
+}
+
+/* Column grid — the newspaper body */
+.section__body{
+  display:grid;
+  gap:0;
+  grid-template-columns:1fr;
+}
+@media (min-width:700px){
+  .section__body{ grid-template-columns:repeat(2,1fr); }
+}
+@media (min-width:1040px){
+  .section__body{ grid-template-columns:repeat(3,1fr); }
+}
+
+/* ============================ STORIES ============================ */
+
+.story{
+  padding:18px 0 20px;
+  border-top:1px solid var(--rule-hair);
+}
+
+/* Vertical column rules. The lead sits outside this grid, so every child is a
+   plain column cell and the nth-child maths stays honest. */
+@media (min-width:700px){
+  .section__body > .story{
+    padding-left:20px;
+    padding-right:20px;
+    border-left:1px solid var(--rule-hair);
+  }
+  .section__body > .story:nth-child(2n+1){ border-left:none; padding-left:0; }
+}
+@media (min-width:1040px){
+  .section__body > .story:nth-child(2n+1){
+    border-left:1px solid var(--rule-hair);
+    padding-left:20px;
+  }
+  .section__body > .story:nth-child(3n+1){ border-left:none; padding-left:0; }
+}
+
+.story__source{
+  font-family:var(--util);
+  font-size:10.5px;
+  letter-spacing:.19em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin:0 0 7px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:baseline;
+}
+.story__outlet{ color:var(--ink); font-weight:700; }
+.story__time::before{ content:"·"; margin-right:8px; color:var(--rule); }
+
+.story__hed{
+  margin:0 0 8px;
+  font-family:var(--display);
+  font-weight:700;
+  font-size:20px;
+  line-height:1.18;
+  letter-spacing:-.008em;
+}
+.story__hed a{
+  text-decoration:none;
+  background-image:linear-gradient(var(--rule-hair),var(--rule-hair));
+  background-size:100% 1px;
+  background-position:0 100%;
+  background-repeat:no-repeat;
+}
+.story__hed a:hover{
+  background-image:linear-gradient(var(--ink),var(--ink));
+}
+
+.story__sum{
+  margin:0;
+  font-size:15.5px;
+  line-height:1.52;
+  color:var(--ink-soft);
+}
+.story__sum--none{
+  font-style:italic;
+  color:var(--ink-faint);
+  font-size:14.5px;
+}
+
+/* The lead — spans the full measure, sets the front page */
+.lead-slot:empty{ display:none; }
+
+.story--lead{
+  border-top:none;
+  padding:0 0 26px;
+  margin-bottom:6px;
+  border-bottom:3px double var(--ink);
+}
+.story--lead .story__hed{
+  font-size:clamp(30px,6.2vw,54px);
+  font-weight:900;
+  line-height:1.04;
+  letter-spacing:-.02em;
+  margin-bottom:12px;
+  max-width:22ch;
+}
+.story--lead .story__sum{
+  font-size:clamp(16px,2.3vw,19px);
+  line-height:1.55;
+  color:var(--ink);
+  max-width:62ch;
+}
+.story--lead .story__sum::first-letter{
+  float:left;
+  font-family:var(--display);
+  font-weight:900;
+  font-size:3.05em;
+  line-height:.82;
+  padding:6px 10px 0 0;
+  color:var(--ink);
+}
+.story--lead .story__source{ font-size:11.5px; letter-spacing:.22em; }
+
+/* ============================ QUOTE BOARD ============================ */
+
+.board{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0 44px;
+  border-top:3px double var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:16px 0 18px;
+  margin-bottom:6px;
+}
+@media (min-width:760px){
+  .board{ grid-template-columns:1fr 1fr; }
+  .board__col + .board__col{ border-left:1px solid var(--rule-hair); padding-left:44px; }
+}
+.board__col + .board__col{ margin-top:20px; }
+@media (min-width:760px){ .board__col + .board__col{ margin-top:0; } }
+
+.board__title{
+  margin:0 0 10px;
+  font-family:var(--util);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+
+.quotes{
+  width:100%;
+  border-collapse:collapse;
+  font-family:var(--util);
+  font-variant-numeric:tabular-nums;
+  font-size:14px;
+}
+.quotes td{
+  padding:5px 0;
+  vertical-align:baseline;
+  border:0;
+}
+/* dot leaders, like an old stock listing */
+.quotes__name{
+  position:relative;
+  overflow:hidden;
+  white-space:nowrap;
+  letter-spacing:.02em;
+}
+.quotes__name span{ background:var(--paper); padding-right:6px; position:relative; z-index:1; }
+.quotes__name::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:.42em;
+  border-bottom:1px dotted var(--rule);
+  z-index:0;
+}
+.quotes__last{ text-align:right; padding-left:10px; white-space:nowrap; font-weight:700; }
+.quotes__chg{ text-align:right; padding-left:14px; white-space:nowrap; width:1%; }
+.quotes__chg--up{ color:var(--up); }
+.quotes__chg--down{ color:var(--down); }
+.quotes__chg--flat{ color:var(--ink-faint); }
+
+.board__note{
+  margin:0 0 clamp(18px,3vw,28px);
+  font-family:var(--util);
+  font-size:10.5px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  text-align:right;
+}
+
+/* ============================ STATES ============================ */
+
+.loading,
+.empty{
+  grid-column:1 / -1;
+  margin:0;
+  padding:24px 0;
+  font-style:italic;
+  color:var(--ink-faint);
+  text-align:center;
+  border-top:1px solid var(--rule-hair);
+}
+
+.noscript{
+  margin:24px var(--gut);
+  padding:16px;
+  border:2px solid var(--ink);
+  font-family:var(--util);
+}
+
+/* ============================ COLOPHON ============================ */
+
+.colophon{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 var(--gut) 56px;
+  text-align:center;
+}
+.colophon__rule{
+  border-top:3px double var(--ink);
+  margin-bottom:16px;
+}
+.colophon__line{
+  margin:0 auto 8px;
+  max-width:70ch;
+  font-size:13.5px;
+  line-height:1.55;
+  color:var(--ink-soft);
+}
+.colophon__line--small{ font-size:12px; color:var(--ink-faint); }
+.colophon__folio{
+  margin:18px 0 0;
+  font-family:var(--util);
+  font-size:11px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+
+/* ============================ PRINT ============================ */
+
+@media print{
+  body{ background:#fff; font-size:11pt; }
+  .tape,.statusbar,.skip-link{ display:none; }
+  .story__hed a{ background:none; }
+  .section__body{ grid-template-columns:repeat(3,1fr); }
+  a[href]::after{ content:" (" attr(href) ")"; font-size:8pt; color:#555; word-break:break-all; }
+}
